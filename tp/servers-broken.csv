@@ -1,0 +1,13 @@
+name,env,ip,port,role
+web-1,prod,127.0.0.1,8001,web
+web-2,prod,127.0.0.1,8002,web
+api-3,prod,127.0.0.1,abc,api
+api-1,prod,127.0.0.1,8003,api
+api-2,prod,127.0.0.1,8004,api
+worker-1,prod,127.0.0.1,8005,worker
+web-3,prod,300.0.0.1,8010,web
+web-stg-1,staging,127.0.0.1,8006,web
+api-stg-1,staging,127.0.0.1,8007,api
+cache-1,prod,127.0.0.1,8009,cache
+db-2,prod,192.0.2.2
+db-1,prod,192.0.2.1,5432,db
