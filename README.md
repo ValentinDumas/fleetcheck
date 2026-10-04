@@ -6,7 +6,7 @@ Fil rouge du cours Développement Python, 3 ESGI ALT DevOps.
 
 | Chemin | Contenu |
 |---|---|
-| `tp/` | Énoncés des TP, un par créneau |
+| `tp/` | Guide d'installation (`c01-installation.md`) et énoncés des TP, un notebook JupyterLab par créneau (`c01.ipynb` …) : copiez-le dans votre dépôt, à côté de `fleetcheck.py` |
 | `simserver.py` | Serveur simulé : `python3 simserver.py`, puis `python3 simserver.py --inventory` pour générer `servers.csv` |
 | `reference/` | Version de référence, mise à jour à la fin de chaque créneau (v0.1 à v1.0). Chaque version publiée porte un tag |
 
