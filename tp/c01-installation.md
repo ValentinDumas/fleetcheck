@@ -18,6 +18,15 @@ La vérification affiche `Python 3.14.x`. Sous macOS, `python3` peut encore dés
 
 `git --version` affiche une version. Sinon : Git for Windows sous Windows, `xcode-select --install` sous macOS, paquet `git` sous Linux.
 
+Puis, une fois par machine, l'identité qui signe vos commits (l'adresse de votre compte GitHub ou GitLab) :
+
+```text
+git config --global user.name "Prénom Nom"
+git config --global user.email "vous@exemple.fr"
+```
+
+Si votre adresse est masquée sur GitHub, prenez l'adresse `…@users.noreply.github.com` indiquée dans *Settings > Emails*. Vérification : `git config --global user.email` affiche votre adresse.
+
 ## 3. Dossier de travail et JupyterLab
 
 Un dossier `esgi-python` contient l'environnement virtuel (`.venv`) et, plus tard, vos dépôts. Dans un terminal (PowerShell sous Windows) :
@@ -49,6 +58,15 @@ Dans le terminal de JupyterLab (*File > New > Terminal*), depuis `esgi-python` :
 |---|---|---|
 | Dépôt personnel | Créer `fleetcheck-<nom>` sur GitHub ou GitLab, puis `git clone <url>` | Le dossier apparaît dans JupyterLab |
 | Dépôt public du cours | `git clone https://github.com/ValentinDumas/fleetcheck.git` | `fleetcheck/simserver.py` présent |
+
+Authentification : GitHub refuse le mot de passe du compte pour `git push` en HTTPS, GitLab aussi dès que la double authentification est active. Sous Windows, Git for Windows installe Git Credential Manager, qui ouvre le navigateur au premier push. Sous macOS et Linux, créez un jeton d'accès personnel et collez-le à la place du mot de passe :
+
+- GitHub : *Settings > Developer settings > Personal access tokens > Tokens (classic)*, portée `repo`, expiration après le 15/12 ;
+- GitLab : avatar > *Edit profile* > *Access tokens*, portée `write_repository`, expiration après le 15/12.
+
+macOS retient le jeton dans le trousseau ; sous Linux, Git Credential Manager ou `gh auth login` (GitHub) évitent de le recoller à chaque push. Ne mettez jamais le jeton dans l'URL du dépôt. Autre voie : une clé SSH ajoutée au compte, puis `git remote set-url origin git@github.com:<compte>/fleetcheck-<nom>.git` (ou l'adresse SSH GitLab).
+
+Vérification, depuis `fleetcheck-<nom>` : `git commit --allow-empty -m "Test du push"` puis `git push` se terminent sans erreur. À faire avant le cours : en salle, un push bloqué coûte l'étape entière.
 
 Le dépôt public est en lecture seule : ne codez jamais dedans, et copiez les notebooks dans votre dépôt avant de les exécuter. Pour récupérer les nouvelles versions, lancez `git pull` dans `fleetcheck/` ; s'il refuse à cause de modifications locales, `git restore .` puis relancez-le.
 
