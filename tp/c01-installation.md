@@ -1,4 +1,4 @@
-# C1 — Installation
+# Installation
 
 À faire avant le lun 12/10, chez vous : l'installation télécharge environ 226 Mo. En salle, les 40 min du TP servent à vérifier et à réparer, avec le notebook `tp/c01.ipynb`.
 
@@ -29,7 +29,7 @@ Un dossier `esgi-python` contient l'environnement virtuel (`.venv`) et, plus tar
 | JupyterLab | `.venv/bin/python -m pip install jupyterlab` | `.venv\Scripts\python -m pip install jupyterlab` |
 | Lancement | `.venv/bin/python -m jupyter lab` | `.venv\Scripts\python -m jupyter lab` |
 
-Pas besoin d'activer l'environnement : on appelle directement son `python`. Le lancement ouvre JupyterLab dans le navigateur, sur `http://localhost:8888`. Il s'arrête par Ctrl+C dans le terminal. Le venv sera expliqué en C7.
+Pas besoin d'activer l'environnement : on appelle directement son `python`. Le lancement ouvre JupyterLab dans le navigateur, sur `http://localhost:8888`. Il s'arrête par Ctrl+C dans le terminal. Le venv sera expliqué en séance v0.6 (mar 10/11).
 
 Vérification : dans JupyterLab, *File > New > Notebook*, noyau *Python 3*, puis une cellule :
 
