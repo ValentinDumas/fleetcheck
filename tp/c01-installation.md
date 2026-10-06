@@ -50,7 +50,7 @@ Dans le terminal de JupyterLab (*File > New > Terminal*), depuis `esgi-python` :
 | Dépôt personnel | Créer `fleetcheck-<nom>` sur GitHub ou GitLab, puis `git clone <url>` | Le dossier apparaît dans JupyterLab |
 | Dépôt public du cours | `git clone https://github.com/ValentinDumas/fleetcheck.git` | `fleetcheck/simserver.py` présent |
 
-Le dépôt public est en lecture seule : ne codez jamais dedans, un `git pull` y écraserait votre travail.
+Le dépôt public est en lecture seule : ne codez jamais dedans, et copiez les notebooks dans votre dépôt avant de les exécuter. Pour récupérer les nouvelles versions, lancez `git pull` dans `fleetcheck/` ; s'il refuse à cause de modifications locales, `git restore .` puis relancez-le.
 
 Arborescence attendue :
 

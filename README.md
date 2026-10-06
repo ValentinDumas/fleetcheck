@@ -10,7 +10,11 @@ Fil rouge du cours Développement Python, 3 ESGI ALT DevOps.
 | `simserver.py` | Serveur simulé : `python3 simserver.py`, puis `python3 simserver.py --inventory` pour générer `servers.csv` |
 | `reference/` | Version de référence, mise à jour à la fin de chaque créneau (v0.1 à v1.0). Chaque version publiée porte un tag |
 
-Travaillez dans votre propre dépôt : un `git pull` de celui-ci écraserait votre code. En cas de retard, copiez les fichiers de `reference/` dont vous avez besoin.
+Clonez ce dépôt à côté de votre dépôt personnel et gardez-le en lecture seule : on y lit, on n'y écrit jamais. Vous codez dans votre dépôt personnel.
+
+- **Récupérer une nouvelle version** : `git pull` dans ce clone.
+- **Notebooks** : copiez-les dans votre dépôt avant de les exécuter. Un notebook exécuté ou enregistré dans `tp/` modifie le clone et le `git pull` refuse de s'exécuter : `git restore .` annule ces modifications, puis relancez le `git pull`.
+- **En retard** : copiez dans votre dépôt les fichiers de `reference/` dont vous avez besoin.
 
 Consulter une version précise, dans un clone à part :
 
