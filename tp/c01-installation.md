@@ -56,7 +56,7 @@ Dans le terminal de JupyterLab (*File > New > Terminal*), depuis `esgi-python` :
 
 | Étape | Commande | Vérification |
 |---|---|---|
-| Dépôt personnel | Créer `fleetcheck-<nom>` sur GitHub ou GitLab, puis `git clone <url>` | Le dossier apparaît dans JupyterLab |
+| Dépôt personnel | Créer `fleetcheck-<nom>` (`<nom>` : votre nom de famille, en minuscules, par exemple `fleetcheck-dupont`) sur GitHub ou GitLab, puis `git clone <url>` | Le dossier apparaît dans JupyterLab |
 | Dépôt public du cours | `git clone https://github.com/ValentinDumas/fleetcheck.git` | `fleetcheck/simserver.py` présent |
 
 Authentification : GitHub refuse le mot de passe du compte pour `git push` en HTTPS, GitLab aussi dès que la double authentification est active. Sous Windows, Git for Windows installe Git Credential Manager, qui ouvre le navigateur au premier push. Sous macOS et Linux, créez un jeton d'accès personnel et collez-le à la place du mot de passe :
