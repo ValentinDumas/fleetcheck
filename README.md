@@ -7,7 +7,7 @@ Fil rouge du cours Développement Python, 3 ESGI ALT DevOps.
 | Chemin | Contenu |
 |---|---|
 | `tp/` | Guide d'installation (`c01-installation.md`) et énoncés des TP, un notebook JupyterLab par séance (`c01.ipynb` …) : copiez-le dans votre dépôt, à côté de `fleetcheck.py` |
-| `simserver.py` | Serveur simulé : `python3 simserver.py`, puis `python3 simserver.py --inventory` pour générer `servers.csv` |
+| `simserver.py` | Serveur simulé : `python3.14 simserver.py` (Windows : `py -3.14 simserver.py`), puis la même commande suivie de `--inventory > servers.csv` pour générer l'inventaire (PowerShell : `| Set-Content -Encoding ascii servers.csv`, voir le TP v0.9) |
 | `reference/` | Version de référence, mise à jour à la fin de chaque séance (v0.1 à v1.0). Chaque version publiée porte un tag |
 
 Clonez ce dépôt à côté de votre dépôt personnel et gardez-le en lecture seule : on y lit, on n'y écrit jamais. Vous codez dans votre dépôt personnel.

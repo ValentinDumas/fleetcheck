@@ -8,11 +8,11 @@ Tout le monde installe la même version, Python 3.14, depuis python.org : les me
 
 | Système | Installation | Vérification |
 |---|---|---|
-| Windows | Installeur de https://www.python.org/downloads/ ; cocher « Add python.exe to PATH » | `py -3.14 --version` |
-| macOS | Installeur `.pkg` de https://www.python.org/downloads/ | `python3.14 --version` |
+| Windows | *Windows installer (64-bit)* de https://www.python.org/downloads/release/python-3148/ (ni le *Python install manager*, ni 3.15) ; cocher « Add python.exe to PATH » | `py -3.14 --version` |
+| macOS | *macOS installer* (`.pkg`) de https://www.python.org/downloads/release/python-3148/ | `python3.14 --version` |
 | Linux | python.org ne fournit pas d'installeur : paquet `python3.14` de la distribution (Ubuntu : PPA deadsnakes, avec `python3.14-venv`) | `python3.14 --version` |
 
-La vérification affiche `Python 3.14.x`. Sous macOS, `python3` peut encore désigner le Python 3.9 d'Apple : utilisez `python3.14`.
+Le bouton principal de python.org/downloads propose Python 3.15 depuis sa sortie : ne le prenez pas, passez par le lien ci-dessus. La vérification affiche `Python 3.14.x`. Sous macOS, `python3` peut encore désigner le Python 3.9 d'Apple : utilisez `python3.14`.
 
 ## 2. git
 
@@ -75,7 +75,7 @@ Arborescence attendue :
 ```text
 esgi-python/
 ├── .venv/
-├── fleetcheck/           dépôt public : énoncés (tp/), simserver.py, reference/
+├── fleetcheck/           dépôt public : énoncés (tp/), simserver.py, reference/ (dès la fin de la séance v0.1)
 └── fleetcheck-<nom>/     votre dépôt : fleetcheck.py et vos notebooks rendus
 ```
 
