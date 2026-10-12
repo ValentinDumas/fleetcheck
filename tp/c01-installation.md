@@ -1,6 +1,6 @@
 # Installation
 
-À faire avant le lun 12/10, chez vous : l'installation télécharge environ 226 Mo. En salle, les 40 min du TP servent à vérifier et à réparer, avec le notebook `tp/c01.ipynb`.
+À faire avant le mar 13/10, chez vous : l'installation télécharge environ 226 Mo. En salle, les 40 min du TP servent à vérifier et à réparer, avec le notebook `tp/c01.ipynb`.
 
 Tout le monde installe la même version, Python 3.14, depuis python.org : les messages d'erreur montrés en cours sont ceux de 3.14, et JupyterLab s'installe de la même façon sur chaque système.
 
