@@ -1,6 +1,6 @@
 # Installation
 
-À faire avant le mar 13/10, chez vous : l'installation télécharge environ 226 Mo, plus environ 1 Go à télécharger (2 Go sur disque) pour les outils de développement d'Apple si `git` manque sous macOS (`xcode-select --install`, compter 15 à 30 min). En salle, les 40 min du TP servent à vérifier et à réparer, avec le notebook `tp/c01.ipynb`.
+À faire avant le mar 13/10, chez vous : l'installation télécharge environ 226 Mo, plus environ 1 Go à télécharger (2 Go sur disque) pour les outils de développement d'Apple si `git` manque sous macOS (`xcode-select --install`, compter 15 à 30 min). En salle, les 40 min du TP servent à vérifier et à réparer, avec le notebook `tp/tp0.1.ipynb`.
 
 Tout le monde installe la même version, Python 3.14, depuis python.org : les messages d'erreur montrés en cours sont ceux de 3.14, et JupyterLab s'installe de la même façon sur chaque système.
 
@@ -38,7 +38,7 @@ Un dossier `esgi-python` contient l'environnement virtuel (`.venv`) et, plus tar
 | JupyterLab | `.venv/bin/python -m pip install jupyterlab` | `.venv\Scripts\python -m pip install jupyterlab` |
 | Lancement | `.venv/bin/python -m jupyter lab` | `.venv\Scripts\python -m jupyter lab` |
 
-Pas besoin d'activer l'environnement : on appelle directement son `python`. Le lancement ouvre JupyterLab dans le navigateur, sur `http://localhost:8888`. Il s'arrête par Ctrl+C dans le terminal. Le venv sera expliqué en séance v0.6 (mar 10/11).
+Pas besoin d'activer l'environnement : on appelle directement son `python`. Le lancement ouvre JupyterLab dans le navigateur, sur `http://localhost:8888`. Il s'arrête par Ctrl+C dans le terminal. Le venv sera expliqué au TP 4.1 (mar 10/11).
 
 Vérification : dans JupyterLab, *File > New > Notebook*, noyau *Python 3*, puis une cellule :
 
@@ -75,7 +75,7 @@ Arborescence attendue :
 ```text
 esgi-python/
 ├── .venv/
-├── fleetcheck/           dépôt public : énoncés (tp/), simserver.py, reference/ (dès la fin de la séance v0.1)
+├── fleetcheck/           dépôt public : énoncés (tp/), simserver.py, reference/ (dès la fin de la séance du TP 1.1)
 └── fleetcheck-<nom>/     votre dépôt : fleetcheck.py et vos notebooks rendus
 ```
 
