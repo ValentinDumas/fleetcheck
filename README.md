@@ -10,10 +10,10 @@ Fil rouge du cours Développement Python, 3 ESGI ALT DevOps.
 | `simserver.py` | Serveur simulé : `python3.14 simserver.py` (Windows : `py -3.14 simserver.py`), puis la même commande suivie de `--inventory > servers.csv` pour générer l'inventaire (PowerShell : `| Set-Content -Encoding ascii servers.csv`, voir le TP 5.1) |
 | `reference/` | Version de référence, mise à jour à la fin de chaque séance (TP 1.1 au TP 6.3). Chaque version publiée porte le tag de son TP (`tp1.1` …) |
 
-Clonez ce dépôt à côté de votre dépôt personnel et gardez-le en lecture seule : on y lit, on n'y écrit jamais. Vous codez dans votre dépôt personnel.
+Clonez ce dépôt en premier, dans `esgi-python`, puis créez votre dépôt personnel `fleetcheck-<nom>` et clonez-le à côté (`tp/tp0.1-installation.md`, section 4). Gardez ce clone en lecture seule : on y lit, on n'y écrit jamais. Vous codez dans votre dépôt personnel, qui ne dépend plus de celui-ci, et vous y commitez étape par étape.
 
 - **Récupérer une nouvelle version** : `git pull` dans ce clone.
-- **Notebooks** : copiez-les dans votre dépôt avant de les exécuter. Un notebook exécuté ou enregistré dans `tp/` modifie le clone et le `git pull` refuse de s'exécuter : `git restore .` annule ces modifications, puis relancez le `git pull`.
+- **Notebooks** : copiez-les à la main dans votre dépôt avant de les exécuter. Un notebook exécuté ou enregistré dans `tp/` modifie le clone et le `git pull` refuse de s'exécuter : `git restore .` annule ces modifications, puis relancez le `git pull`.
 - **En retard** : copiez dans votre dépôt les fichiers de `reference/` dont vous avez besoin.
 
 Consulter une version précise, dans un clone à part :

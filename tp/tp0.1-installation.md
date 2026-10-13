@@ -52,12 +52,12 @@ La première ligne commence par `3.14`, la seconde finit par `.venv`.
 
 ## 4. Dépôts
 
-Dans le terminal de JupyterLab (*File > New > Terminal*), depuis `esgi-python` :
+Dans le terminal de JupyterLab (*File > New > Terminal*), depuis `esgi-python`, dans cet ordre : le dépôt public d'abord, votre dépôt personnel ensuite.
 
 | Étape | Commande | Vérification |
 |---|---|---|
-| Dépôt personnel | Créer `fleetcheck-<nom>` (`<nom>` : votre nom de famille, en minuscules, par exemple `fleetcheck-dupont`) sur GitHub ou GitLab en cochant *Add a README file* (GitHub) ou *Initialize repository with a README* (GitLab) (un dépôt vide pose problème au premier push : branche `master` contre `main`, pas de branche distante), puis `git clone <url>` | Le dossier apparaît dans JupyterLab |
-| Dépôt public du cours | `git clone https://github.com/ValentinDumas/fleetcheck.git` | `fleetcheck/simserver.py` présent |
+| 1. Dépôt public du cours | `git clone https://github.com/ValentinDumas/fleetcheck.git` | `fleetcheck/simserver.py` présent |
+| 2. Dépôt personnel | Créer `fleetcheck-<nom>` (`<nom>` : votre nom de famille, en minuscules, par exemple `fleetcheck-dupont`) sur GitHub ou GitLab en cochant *Add a README file* (GitHub) ou *Initialize repository with a README* (GitLab) (un dépôt vide pose problème au premier push : branche `master` contre `main`, pas de branche distante), puis `git clone <url>`, à côté de `fleetcheck` | Le dossier apparaît dans JupyterLab |
 
 Authentification : GitHub refuse le mot de passe du compte pour `git push` en HTTPS, GitLab aussi dès que la double authentification est active. Sous Windows, Git for Windows installe Git Credential Manager, qui ouvre le navigateur au premier push. Sous macOS et Linux, créez un jeton d'accès personnel et collez-le à la place du mot de passe :
 
@@ -68,7 +68,7 @@ macOS retient le jeton dans le trousseau ; sous Linux, Git Credential Manager ou
 
 Vérification, depuis `fleetcheck-<nom>` : `git commit --allow-empty -m "Test du push"` puis `git push` se terminent sans erreur. À faire avant le cours : en salle, un push bloqué coûte l'étape entière.
 
-Le dépôt public est en lecture seule : ne codez jamais dedans, et copiez les notebooks dans votre dépôt avant de les exécuter. Pour récupérer les nouvelles versions, lancez `git pull` dans `fleetcheck/` ; s'il refuse à cause de modifications locales, `git restore .` puis relancez-le.
+Le dépôt public est en lecture seule : ne codez jamais dedans. À chaque TP, lancez `git pull` dans `fleetcheck/` pour récupérer le nouvel énoncé ; s'il refuse à cause de modifications locales, `git restore .` puis relancez-le. Copiez ensuite à la main le notebook `tp/tpX.Y.ipynb` dans votre dépôt avant de l'exécuter. À partir de là, votre dépôt ne dépend plus du dépôt public : vous y commitez étape par étape.
 
 Arborescence attendue :
 
