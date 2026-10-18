@@ -1,11 +1,14 @@
+import argparse
 import csv
 import ipaddress
 import json
+import logging
 import sys
 from datetime import datetime
 
-INVENTORY = "servers.csv"
 HEADER = ["name", "env", "ip", "port", "role"]
+
+log = logging.getLogger("fleetcheck")
 
 
 class InvalidServer(Exception):
@@ -35,12 +38,12 @@ def load(path):
     try:
         with open(path, newline="", encoding="utf-8") as f:
             rows = list(csv.reader(f))
-    except FileNotFoundError as e:
-        print(f"inventaire illisible : {e}")
-        sys.exit(1)
+    except (OSError, UnicodeDecodeError) as e:
+        log.error("inventaire illisible : %s", e)
+        sys.exit(2)
     if not rows or rows[0] != HEADER:
-        print(f"en-tête attendu dans {path} : {','.join(HEADER)}")
-        sys.exit(1)
+        log.error("en-tête attendu dans %s : %s", path, ",".join(HEADER))
+        sys.exit(2)
 
     servers, invalid = [], []
     for line, row in enumerate(rows[1:], start=2):
@@ -50,11 +53,14 @@ def load(path):
             if len(row) != len(HEADER):
                 raise InvalidServer(f"{len(row)} champs au lieu de {len(HEADER)}")
             servers.append(validate(dict(zip(HEADER, row))))
+            log.debug("ligne %d valide : %s", line, row[0])
         except InvalidServer as e:
+            log.warning("ligne %d ignorée : %s", line, e)
             invalid.append({"line": line, "raw": ",".join(row), "error": str(e)})
     if not servers:
-        print(f"aucune ligne valide dans {path}")
-        sys.exit(1)
+        log.error("aucune ligne valide dans %s", path)
+        sys.exit(2)
+    log.info("%d serveur(s) valide(s), %d ligne(s) invalide(s) dans %s", len(servers), len(invalid), path)
     return servers, invalid
 
 
@@ -62,9 +68,17 @@ def load_config(path):
     try:
         with open(path, encoding="utf-8") as f:
             return json.load(f)
-    except (FileNotFoundError, json.JSONDecodeError) as e:
-        print(f"config illisible ({path}) : {e}")
-        sys.exit(1)
+    except (OSError, ValueError) as e:
+        log.error("config illisible (%s) : %s", path, e)
+        sys.exit(2)
+
+
+def exit_code(statuses, invalid_count):
+    if invalid_count:
+        return 2
+    if "down" in statuses:
+        return 1
+    return 0
 
 
 def build_report(servers, invalid):
@@ -95,15 +109,50 @@ def format_counts(counts):
     return ", ".join(f"{value} {count}" for value, count in counts.items())
 
 
-config = load_config("config.json")
-servers, invalid = load(INVENTORY)
-print(f"{len(servers)} serveurs valides, {len(invalid)} invalides")
-print(f"par env : {format_counts(count_by(servers, 'env'))}")
-print(f"par rôle : {format_counts(count_by(servers, 'role'))}")
-prod_web = by_role(by_env(servers, "prod"), "web")
-print(f"prod/web : {', '.join(s['name'] for s in prod_web)}")
-for line in invalid:
-    print(f"invalide ligne {line['line']} : {line['error']}")
+def print_summary(servers, invalid):
+    print(f"{len(servers)} serveurs valides, {len(invalid)} invalides")
+    print(f"par env : {format_counts(count_by(servers, 'env'))}")
+    print(f"par rôle : {format_counts(count_by(servers, 'role'))}")
+    prod_web = by_role(by_env(servers, "prod"), "web")
+    print(f"prod/web : {', '.join(s['name'] for s in prod_web)}")
 
-with open("report.json", "w", encoding="utf-8") as f:
-    json.dump(build_report(servers, invalid), f, indent=2, ensure_ascii=False)
+
+def main():
+    parser = argparse.ArgumentParser(description="Inventaire d'un parc de serveurs.")
+    parser.add_argument("--inventory", default="servers.csv", help="fichier CSV d'inventaire (défaut : servers.csv)")
+    parser.add_argument("--env", help="ne garder que cet environnement")
+    parser.add_argument("--format", choices=["text", "json"], default="text", help="format de la sortie standard")
+    parser.add_argument("-v", "--verbose", action="count", default=0, help="-v : INFO, -vv : DEBUG")
+    args = parser.parse_args()
+
+    if args.verbose >= 2:
+        level = logging.DEBUG
+    elif args.verbose == 1:
+        level = logging.INFO
+    else:
+        level = logging.WARNING
+    logging.basicConfig(level=level, format="%(levelname)s %(message)s", stream=sys.stderr)
+
+    config = load_config("config.json")
+    servers, invalid = load(args.inventory)
+    if args.env:
+        servers = by_env(servers, args.env)
+        if not servers:
+            log.error("aucun serveur pour --env %s", args.env)
+            sys.exit(2)
+
+    report = build_report(servers, invalid)
+    with open("report.json", "w", encoding="utf-8") as f:
+        json.dump(report, f, indent=2, ensure_ascii=False)
+    log.info("rapport écrit : report.json")
+
+    if args.format == "json":
+        print(json.dumps(report, indent=2, ensure_ascii=False))
+    else:
+        print_summary(servers, invalid)
+
+    sys.exit(exit_code([], len(invalid)))
+
+
+if __name__ == "__main__":
+    main()
