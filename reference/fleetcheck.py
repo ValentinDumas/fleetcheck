@@ -1,18 +1,11 @@
+import csv
 import ipaddress
+import json
+import sys
+from datetime import datetime
 
-SERVERS = [
-    {"name": "web-1", "env": "prod", "ip": "127.0.0.1", "port": "8001", "role": "web"},
-    {"name": "web-2", "env": "prod", "ip": "127.0.0.1", "port": "8002", "role": "web"},
-    {"name": "api-1", "env": "prod", "ip": "127.0.0.1", "port": "8003", "role": "api"},
-    {"name": "api-2", "env": "prod", "ip": "127.0.0.1", "port": "8004", "role": "api"},
-    {"name": "worker-1", "env": "prod", "ip": "127.0.0.1", "port": "8005", "role": "worker"},
-    {"name": "web-stg-1", "env": "staging", "ip": "127.0.0.1", "port": "8006", "role": "web"},
-    {"name": "api-stg-1", "env": "staging", "ip": "127.0.0.1", "port": "8007", "role": "api"},
-    {"name": "cache-1", "env": "prod", "ip": "127.0.0.1", "port": "8009", "role": "cache"},
-    {"name": "db-1", "env": "prod", "ip": "192.0.2.1", "port": "5432", "role": "db"},
-    {"name": "api-3", "env": "prod", "ip": "127.0.0.1", "port": "abc", "role": "api"},
-    {"name": "web-3", "env": "prod", "ip": "300.0.0.1", "port": "8010", "role": "web"},
-]
+INVENTORY = "servers.csv"
+HEADER = ["name", "env", "ip", "port", "role"]
 
 
 class InvalidServer(Exception):
@@ -38,14 +31,49 @@ def validate(server):
     return valid
 
 
-def load(raw_servers):
+def load(path):
+    try:
+        with open(path, newline="", encoding="utf-8") as f:
+            rows = list(csv.reader(f))
+    except FileNotFoundError as e:
+        print(f"inventaire illisible : {e}")
+        sys.exit(1)
+    if not rows or rows[0] != HEADER:
+        print(f"en-tête attendu dans {path} : {','.join(HEADER)}")
+        sys.exit(1)
+
     servers, invalid = [], []
-    for raw in raw_servers:
+    for line, row in enumerate(rows[1:], start=2):
+        if not row:
+            continue
         try:
-            servers.append(validate(raw))
+            if len(row) != len(HEADER):
+                raise InvalidServer(f"{len(row)} champs au lieu de {len(HEADER)}")
+            servers.append(validate(dict(zip(HEADER, row))))
         except InvalidServer as e:
-            invalid.append({"name": raw["name"], "error": str(e)})
+            invalid.append({"line": line, "raw": ",".join(row), "error": str(e)})
+    if not servers:
+        print(f"aucune ligne valide dans {path}")
+        sys.exit(1)
     return servers, invalid
+
+
+def load_config(path):
+    try:
+        with open(path, encoding="utf-8") as f:
+            return json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError) as e:
+        print(f"config illisible ({path}) : {e}")
+        sys.exit(1)
+
+
+def build_report(servers, invalid):
+    return {
+        "generated_at": datetime.now().astimezone().isoformat(timespec="seconds"),
+        "summary": {"total": len(servers), "invalid": len(invalid)},
+        "services": servers,
+        "invalid_lines": invalid,
+    }
 
 
 def by_env(servers, env):
@@ -67,11 +95,15 @@ def format_counts(counts):
     return ", ".join(f"{value} {count}" for value, count in counts.items())
 
 
-servers, invalid = load(SERVERS)
+config = load_config("config.json")
+servers, invalid = load(INVENTORY)
 print(f"{len(servers)} serveurs valides, {len(invalid)} invalides")
 print(f"par env : {format_counts(count_by(servers, 'env'))}")
 print(f"par rôle : {format_counts(count_by(servers, 'role'))}")
 prod_web = by_role(by_env(servers, "prod"), "web")
 print(f"prod/web : {', '.join(s['name'] for s in prod_web)}")
 for line in invalid:
-    print(f"invalide {line['name']} : {line['error']}")
+    print(f"invalide ligne {line['line']} : {line['error']}")
+
+with open("report.json", "w", encoding="utf-8") as f:
+    json.dump(build_report(servers, invalid), f, indent=2, ensure_ascii=False)

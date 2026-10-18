@@ -1,0 +1,11 @@
+{
+  "timeout_s": 2,
+  "attempts": 3,
+  "backoff_s": 0.5,
+  "degraded_s": 1.0,
+  "ping_timeout_s": 1,
+  "drift_envs": ["prod"],
+  "releases_url": "http://127.0.0.1:8000/api/v4/projects/fleetcheck/releases",
+  "reports_dir": "reports",
+  "archive_after_days": 7
+}
