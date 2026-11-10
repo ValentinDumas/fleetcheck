@@ -35,6 +35,7 @@ Un dossier `esgi-python` contient l'environnement virtuel (`.venv`) et, plus tar
 |---|---|---|
 | Dossier | `mkdir esgi-python` puis `cd esgi-python` | idem |
 | Environnement virtuel | `python3.14 -m venv .venv` | `py -3.14 -m venv .venv` |
+| pip à jour | `.venv/bin/python -m pip install --upgrade pip` | `.venv\Scripts\python -m pip install --upgrade pip` |
 | JupyterLab | `.venv/bin/python -m pip install jupyterlab` | `.venv\Scripts\python -m pip install jupyterlab` |
 | Lancement | `.venv/bin/python -m jupyter lab` | `.venv\Scripts\python -m jupyter lab` |
 
