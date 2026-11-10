@@ -3,7 +3,6 @@ import csv
 import ipaddress
 import json
 import logging
-import os
 import sys
 from datetime import datetime
 
@@ -141,11 +140,6 @@ def main():
         if not servers:
             log.error("aucun serveur pour --env %s", args.env)
             sys.exit(2)
-
-    if os.environ.get("FLEETCHECK_WEBHOOK_URL"):
-        log.info("FLEETCHECK_WEBHOOK_URL défini : alerte activée")
-    else:
-        log.info("FLEETCHECK_WEBHOOK_URL absent : pas d'alerte")
 
     report = build_report(servers, invalid)
     with open("report.json", "w", encoding="utf-8") as f:
